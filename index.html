@@ -102,13 +102,66 @@
     100% { transform: translate(72px, 42px); }
   }
 
-  /* Radial glow */
+  /* Heartbeat background glow — lub-dub */
   .hero-glow {
     position: absolute;
     top: 30%; left: 50%; transform: translate(-50%, -50%);
     width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(192,57,43,0.18) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(192,57,43,0.22) 0%, transparent 70%);
     pointer-events: none;
+    animation: hbLub 2.4s ease-in-out infinite;
+    will-change: transform, opacity;
+  }
+  /* Second glow burst — the "dub" beat, shifts to amber */
+  .hero-glow-dub {
+    position: absolute;
+    top: 30%; left: 50%;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(245,130,0,0.18) 0%, transparent 65%);
+    pointer-events: none;
+    opacity: 0;
+    animation: hbDub 2.4s ease-in-out infinite;
+    will-change: transform, opacity;
+  }
+  @keyframes hbLub {
+    0%   { opacity: 0.85; transform: translate(-50%,-50%) scale(1); }
+    4%   { opacity: 1;    transform: translate(-50%,-50%) scale(1.2); }
+    12%  { opacity: 0.85; transform: translate(-50%,-50%) scale(1); }
+    100% { opacity: 0.85; transform: translate(-50%,-50%) scale(1); }
+  }
+  @keyframes hbDub {
+    0%   { opacity: 0;    transform: translate(-50%,-50%) scale(1); }
+    9%   { opacity: 0;    transform: translate(-50%,-50%) scale(1); }
+    15%  { opacity: 1;    transform: translate(-50%,-50%) scale(1.25); }
+    24%  { opacity: 0;    transform: translate(-50%,-50%) scale(1.05); }
+    100% { opacity: 0;    transform: translate(-50%,-50%) scale(1); }
+  }
+
+  /* Expanding pulse rings — radiate on each beat */
+  .hero-hb-rings {
+    position: absolute;
+    top: 30%; left: 50%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .hb-ring {
+    position: absolute;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    transform: translate(-50%,-50%) scale(0.1);
+    opacity: 0;
+    animation: ringOut 2.4s ease-out infinite;
+    will-change: transform, opacity;
+  }
+  /* Lub rings — red */
+  .hb-ring:nth-child(1) { border: 1.5px solid rgba(192,57,43,0.55);  animation-delay: 0s; }
+  .hb-ring:nth-child(2) { border: 1px   solid rgba(192,57,43,0.25);  animation-delay: 0.12s; }
+  /* Dub rings — gold */
+  .hb-ring:nth-child(3) { border: 1.5px solid rgba(245,140,0,0.45);  animation-delay: 0.22s; }
+  .hb-ring:nth-child(4) { border: 1px   solid rgba(245,140,0,0.2);   animation-delay: 0.34s; }
+  @keyframes ringOut {
+    0%   { transform: translate(-50%,-50%) scale(0.12); opacity: 0.85; }
+    100% { transform: translate(-50%,-50%) scale(5.5);  opacity: 0; }
   }
 
   .hero-content { position: relative; z-index: 2; text-align: center; max-width: 820px; }
@@ -659,6 +712,13 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-glow"></div>
+  <div class="hero-glow-dub"></div>
+  <div class="hero-hb-rings">
+    <div class="hb-ring"></div>
+    <div class="hb-ring"></div>
+    <div class="hb-ring"></div>
+    <div class="hb-ring"></div>
+  </div>
   <div class="hero-content">
 
     <div class="hero-badge">
