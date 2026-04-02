@@ -76,19 +76,30 @@
     overflow: hidden;
   }
 
-  /* Animated background grid */
+  /* Animated background — diagonal crosshatch */
   .hero::before {
     content: '';
     position: absolute; inset: 0;
-    background-image: 
-      linear-gradient(rgba(245,184,0,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(245,184,0,0.04) 1px, transparent 1px);
-    background-size: 50px 50px;
-    animation: gridDrift 20s linear infinite;
+    background-image:
+      repeating-linear-gradient(
+        120deg,
+        rgba(245,184,0,0.035) 0px,
+        rgba(245,184,0,0.035) 1px,
+        transparent 1px,
+        transparent 72px
+      ),
+      repeating-linear-gradient(
+        60deg,
+        rgba(245,184,0,0.02) 0px,
+        rgba(245,184,0,0.02) 1px,
+        transparent 1px,
+        transparent 72px
+      );
+    animation: scanDrift 18s linear infinite;
   }
-  @keyframes gridDrift {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(50px); }
+  @keyframes scanDrift {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(72px, 42px); }
   }
 
   /* Radial glow */
@@ -150,9 +161,10 @@
     animation: fadeUp 0.7s 0.3s ease both;
   }
   .ekg-path {
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    animation: drawEKG 2s 0.8s ease forwards, ekgPulse 2.5s 2.8s ease-in-out infinite;
+    stroke-dasharray: 1500;
+    stroke-dashoffset: 1500;
+    animation: drawEKG 2s 0.8s cubic-bezier(0.4,0,0.2,1) forwards, ekgPulse 3s 2.8s ease-in-out infinite;
+    will-change: stroke-dashoffset;
   }
   @keyframes drawEKG {
     to { stroke-dashoffset: 0; }
@@ -603,7 +615,7 @@
     border-radius: 50%;
     pointer-events: none; z-index: 9999;
     transform: translate(-50%,-50%);
-    transition: transform 0.08s ease;
+    will-change: left, top;
     mix-blend-mode: screen;
   }
 
@@ -665,14 +677,32 @@
     <!-- EKG LINE -->
     <div class="ekg-container">
       <svg viewBox="0 0 600 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path class="ekg-path"
+        <defs>
+          <filter id="dotGlow" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="3.5" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <path id="ekgLine" class="ekg-path"
           d="M0,35 L80,35 L100,35 L115,10 L130,60 L145,5 L160,65 L175,35 L200,35 L220,35 L230,35 L240,35 L255,10 L270,60 L285,5 L300,65 L315,35 L340,35 L360,35 L380,35 L395,10 L410,60 L425,5 L440,65 L455,35 L480,35 L600,35"
           stroke="#F5B800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
         />
-        <!-- Pulse dot -->
-        <circle cx="300" cy="35" r="5" fill="#F5B800" opacity="0">
-          <animate attributeName="opacity" values="0;1;0" dur="2.5s" begin="2.8s" repeatCount="indefinite"/>
-          <animate attributeName="r" values="5;12;5" dur="2.5s" begin="2.8s" repeatCount="indefinite"/>
+        <!-- Dot that travels along the path -->
+        <circle r="5" fill="#F5B800" filter="url(#dotGlow)" opacity="0">
+          <animateMotion dur="3s" begin="2.8s" repeatCount="indefinite" rotate="none">
+            <mpath href="#ekgLine"/>
+          </animateMotion>
+          <animate attributeName="opacity"
+            values="0;0;1;1;0"
+            keyTimes="0;0.04;0.1;0.88;1"
+            dur="3s" begin="2.8s" repeatCount="indefinite"/>
+          <animate attributeName="r"
+            values="4;5;5;4"
+            keyTimes="0;0.1;0.88;1"
+            dur="3s" begin="2.8s" repeatCount="indefinite"/>
         </circle>
       </svg>
     </div>
@@ -999,12 +1029,25 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Heartbeat cursor
+  // Fix EKG stroke-dasharray to actual path length
+  const ekgPath = document.querySelector('.ekg-path');
+  if (ekgPath) {
+    const len = Math.ceil(ekgPath.getTotalLength());
+    ekgPath.style.strokeDasharray = len;
+    ekgPath.style.strokeDashoffset = len;
+  }
+
+  // Heartbeat cursor — smooth via rAF
   const cursor = document.getElementById('hbCursor');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-  });
+  let mx = -100, my = -100, cx = -100, cy = -100;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function rafCursor() {
+    cx += (mx - cx) * 0.18;
+    cy += (my - cy) * 0.18;
+    cursor.style.left = cx + 'px';
+    cursor.style.top  = cy + 'px';
+    requestAnimationFrame(rafCursor);
+  })();
 
   // Countdown to April 9, 2025 at 18:00 ET
   function updateCountdown() {
