@@ -700,15 +700,25 @@
       height: 100vh;
       height: 100dvh;
       min-height: unset;
-      padding: 80px 20px 32px;
-      justify-content: space-evenly;
+      padding: 76px 20px 28px;
+      justify-content: flex-start;
+      align-items: stretch;
       gap: 0;
     }
-    /* Tighten the top section so the price block gets more room */
-    .hero-badge { margin-bottom: 10px; font-size: 0.62rem; padding: 7px 16px; letter-spacing: 1.8px; }
-    .hero h1 { font-size: 2.75rem; line-height: 0.92; margin-bottom: 8px; }
+    /* hero-content becomes the flex column that fills all space */
+    .hero-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    /* Strip all margins — space-between handles the gaps */
+    .hero-badge { margin-bottom: 0; font-size: 0.62rem; padding: 7px 16px; letter-spacing: 1.8px; }
+    .hero h1 { font-size: 2.75rem; line-height: 0.92; margin-bottom: 0; }
     .hero-sub { margin-bottom: 0; font-size: 0.93rem; line-height: 1.45; }
-    .ekg-container { margin-bottom: 0; }
+    .ekg-container { margin-bottom: 0; width: 100%; }
 
     /* Price block — compact and tight, no wrapping */
     .hero-price-block { flex-direction: row; gap: 0; padding: 16px 20px; margin-bottom: 0; width: 100%; box-sizing: border-box; }
@@ -723,7 +733,7 @@
     .price-event-spots { font-size: 0.68rem; padding: 3px 10px; }
 
     /* Action buttons — stacked, full width */
-    .hero-actions { gap: 10px; flex-direction: column; align-items: stretch; }
+    .hero-actions { gap: 10px; flex-direction: column; align-items: stretch; width: 100%; }
     .btn-primary { justify-content: center; width: 100%; box-sizing: border-box; padding: 15px 24px; }
     .btn-secondary { justify-content: center; width: 100%; box-sizing: border-box; padding: 14px 24px; }
     .float-phone { display: none; }
