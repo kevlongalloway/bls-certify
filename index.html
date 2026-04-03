@@ -4,9 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LifeLine BLS Training | AHA Certified BLS Courses in Atlanta</title>
+
+<!-- OpenGraph / iMessage preview -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://blscertify.online">
+<meta property="og:title" content="LifeLine BLS Training | AHA Certified BLS Courses in Atlanta">
+<meta property="og:description" content="Get AHA-certified in one evening. BLS Provider class in Atlanta, GA — only $45. Limited spots. Book your seat now.">
+<meta property="og:image" content="https://blscertify.online/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LifeLine BLS Training | AHA Certified BLS Courses in Atlanta">
+<meta name="twitter:description" content="Get AHA-certified in one evening. BLS Provider class in Atlanta, GA — only $45. Limited spots. Book your seat now.">
+<meta name="twitter:image" content="https://blscertify.online/og-image.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 
 <style>
   :root {
@@ -832,8 +847,8 @@
       <div class="price-divider"></div>
       <div class="price-event">
         <div class="price-event-label">Next Class</div>
-        <div class="price-event-date">Thursday, April 9th</div>
-        <div class="price-event-time">6:00 PM</div>
+        <div class="price-event-date" id="heroDate">Thursday, April 9th</div>
+        <div class="price-event-time" id="heroTime">6:00 PM</div>
         <div class="price-event-spots">Limited Spots Left</div>
       </div>
     </div>
@@ -1027,9 +1042,9 @@
 
 <!-- COUNTDOWN -->
 <section class="countdown-section">
-  <div class="cd-urgency-bar"><span class="cd-pulse-dot"></span> Only <strong>3 spots</strong> remaining at this price</div>
+  <div class="cd-urgency-bar"><span class="cd-pulse-dot"></span> Only <strong id="cdSpots">3 spots</strong> remaining at this price</div>
   <div class="countdown-title">Class Fills Up Fast</div>
-  <div class="countdown-sub">Thursday, April 9th at 6:00 PM — Time remaining:</div>
+  <div class="countdown-sub" id="cdSub">Thursday, April 9th at 6:00 PM — Time remaining:</div>
   <div class="countdown-blocks">
     <div class="cd-block"><div class="cd-num" id="cdDays">00</div><div class="cd-label">Days</div></div>
     <div class="cd-block"><div class="cd-num" id="cdHours">00</div><div class="cd-label">Hours</div></div>
@@ -1067,7 +1082,7 @@
       </div>
       <div class="faq-item">
         <div class="faq-q">How do I pay / reserve my spot? <span>+</span></div>
-        <div class="faq-a">Fill out the form below or call/text 678-662-4124 to book. Payment is collected at the door or can be arranged in advance. Spots are limited so don't wait.</div>
+        <div class="faq-a">Use the Calendly booking widget below or call/text 678-662-4124 to reserve your spot. Payment is collected at the door or can be arranged in advance. Spots are limited so don't wait.</div>
       </div>
     </div>
   </div>
@@ -1080,43 +1095,11 @@
     <h2>Don't Miss<br><span>This Deal</span></h2>
     <p>One evening. One certification. Skills that last forever. Grab the $45 spot before this class fills up.</p>
 
-    <div class="register-form">
-      <div class="form-title">Reserve My Spot</div>
-      <div class="form-sub">Thursday, April 9th · 6:00 PM · Atlanta, GA · Only $45</div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>First Name</label>
-          <input type="text" placeholder="Jordan" id="fFirst">
-        </div>
-        <div class="form-group">
-          <label>Last Name</label>
-          <input type="text" placeholder="Williams" id="fLast">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" placeholder="you@email.com" id="fEmail">
-      </div>
-      <div class="form-group">
-        <label>Phone Number</label>
-        <input type="tel" placeholder="(404) 000-0000" id="fPhone">
-      </div>
-      <div class="form-group">
-        <label>Why are you getting certified?</label>
-        <select id="fReason">
-          <option value="">Select one...</option>
-          <option>Job / Employment Requirement</option>
-          <option>Nursing / Medical Student</option>
-          <option>Personal Preparedness</option>
-          <option>Renewal / Recertification</option>
-          <option>Daycare / School Staff</option>
-          <option>Other</option>
-        </select>
-      </div>
-
-      <button class="btn-submit" onclick="handleSubmit()">Register Now — $45</button>
-      <div class="form-trust">Your info is safe. No spam, ever. Or call/text: <strong>678-662-4124</strong></div>
+    <div class="register-form" style="padding: 0; overflow: hidden; border-radius: 16px;">
+      <div class="form-title" style="padding: 28px 28px 4px;">Reserve My Spot</div>
+      <div class="form-sub" id="formSub" style="padding: 0 28px 20px;">Thursday, April 9th · 6:00 PM · Atlanta, GA · Only $45</div>
+      <div class="calendly-inline-widget" id="calendlyWidget" data-url="https://calendly.com/YOUR_CALENDLY_USERNAME/bls-class" style="min-width:280px; height:700px;"></div>
+      <div class="form-trust" style="padding: 16px 28px 24px;">No account needed. Or call/text: <strong>678-662-4124</strong></div>
     </div>
   </div>
 </section>
@@ -1144,7 +1127,9 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script>
   // Fix EKG stroke-dasharray to actual path length
   try {
     const ekgPath = document.querySelector('.ekg-path');
@@ -1167,76 +1152,62 @@
     requestAnimationFrame(rafCursor);
   })();
 
-  // Countdown to April 9, 2026 at 18:00 ET
-  function updateCountdown() {
-    const target = new Date('2026-04-09T18:00:00-04:00');
-    const now = new Date();
-    const diff = target - now;
-    if (diff <= 0) {
-      document.getElementById('cdDays').textContent = '00';
-      document.getElementById('cdHours').textContent = '00';
-      document.getElementById('cdMins').textContent = '00';
-      document.getElementById('cdSecs').textContent = '00';
-      return;
+  // Load config.json and wire up dynamic content + countdown + Calendly
+  function startCountdown(isoDate) {
+    const target = new Date(isoDate);
+    function tick() {
+      const diff = target - new Date();
+      if (diff <= 0) {
+        ['cdDays','cdHours','cdMins','cdSecs'].forEach(id => {
+          document.getElementById(id).textContent = '00';
+        });
+        return;
+      }
+      document.getElementById('cdDays').textContent  = String(Math.floor(diff / 86400000)).padStart(2,'0');
+      document.getElementById('cdHours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+      document.getElementById('cdMins').textContent  = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
+      document.getElementById('cdSecs').textContent  = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
     }
-    const days = Math.floor(diff / 86400000);
-    const hrs = Math.floor((diff % 86400000) / 3600000);
-    const mins = Math.floor((diff % 3600000) / 60000);
-    const secs = Math.floor((diff % 60000) / 1000);
-    document.getElementById('cdDays').textContent = String(days).padStart(2,'0');
-    document.getElementById('cdHours').textContent = String(hrs).padStart(2,'0');
-    document.getElementById('cdMins').textContent = String(mins).padStart(2,'0');
-    document.getElementById('cdSecs').textContent = String(secs).padStart(2,'0');
-  }
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-
-  // Form submit
-  function handleSubmit() {
-    const first = document.getElementById('fFirst').value.trim();
-    const email = document.getElementById('fEmail').value.trim();
-    const phone = document.getElementById('fPhone').value.trim();
-    if (!first || !email || !phone) {
-      alert('Please fill in your name, email, and phone number.');
-      return;
-    }
-    launchConfetti();
-    document.querySelector('.register-form').innerHTML = `
-      <div style="text-align:center; padding: 40px 0;">
-        <div style="font-family:'Bebas Neue',sans-serif; font-size:3rem; color:var(--gold); margin-bottom:12px; letter-spacing:1px;">You're In.</div>
-        <div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; margin-bottom:10px;">Registration Confirmed</div>
-        <p style="color: var(--muted); font-size:0.95rem; line-height:1.65; margin-bottom:20px;">
-          Thanks ${first}! We'll confirm your spot via text/email. 
-          Questions? Call or text us at <strong style="color:var(--gold)">678-662-4124</strong>.
-        </p>
-        <div style="background: rgba(29,185,119,0.12); border: 1px solid rgba(29,185,119,0.35); border-radius:10px; padding:16px 20px; font-size:0.88rem; color: #1DB977;">
-          See you April 9th at 6:00 PM &middot; Bring a valid ID &middot; $45 due at door
-        </div>
-      </div>
-    `;
+    tick();
+    setInterval(tick, 1000);
   }
 
-  function launchConfetti() {
-    const wrap = document.getElementById('confetti');
-    wrap.innerHTML = '';
-    wrap.classList.add('show');
-    const colors = ['#F5B800','#FFD84D','#C0392B','#FFFFFF','#1DB977','#C9930A'];
-    for (let i = 0; i < 80; i++) {
-      const el = document.createElement('div');
-      el.className = 'confetti-piece';
-      el.style.cssText = `
-        left: ${Math.random()*100}vw;
-        background: ${colors[Math.floor(Math.random()*colors.length)]};
-        width: ${6+Math.random()*8}px;
-        height: ${6+Math.random()*8}px;
-        border-radius: ${Math.random()>0.5 ? '50%' : '2px'};
-        animation-delay: ${Math.random()*0.8}s;
-        animation-duration: ${2+Math.random()*2}s;
-      `;
-      wrap.appendChild(el);
-    }
-    setTimeout(() => { wrap.classList.remove('show'); wrap.innerHTML = ''; }, 4000);
-  }
+  fetch('./config.json')
+    .then(r => r.json())
+    .then(cfg => {
+      const { dateISO, dateDisplay, timeDisplay, spotsLeft } = cfg.nextClass;
+      const price = cfg.price;
+      const calendlyUrl = cfg.calendlyUrl;
+
+      // Hero date/time
+      const heroDate = document.getElementById('heroDate');
+      const heroTime = document.getElementById('heroTime');
+      if (heroDate) heroDate.textContent = dateDisplay;
+      if (heroTime) heroTime.textContent = timeDisplay;
+
+      // Countdown sub-text and spots
+      const cdSub   = document.getElementById('cdSub');
+      const cdSpots = document.getElementById('cdSpots');
+      if (cdSub)   cdSub.textContent   = dateDisplay + ' at ' + timeDisplay + ' — Time remaining:';
+      if (cdSpots) cdSpots.textContent = spotsLeft + ' spots';
+
+      // Form sub-text
+      const formSub = document.getElementById('formSub');
+      if (formSub) formSub.textContent = dateDisplay + ' \u00b7 ' + timeDisplay + ' \u00b7 Atlanta, GA \u00b7 Only ' + price;
+
+      // Calendly widget
+      const widget = document.getElementById('calendlyWidget');
+      if (widget && calendlyUrl) {
+        widget.setAttribute('data-url', calendlyUrl);
+        if (window.Calendly) Calendly.initInlineWidgets();
+      }
+
+      startCountdown(dateISO);
+    })
+    .catch(() => {
+      // Fallback to hardcoded values if config.json cannot be fetched
+      startCountdown('2026-04-09T18:00:00-04:00');
+    });
 
   // Scroll reveal
   const observer = new IntersectionObserver(entries => {
@@ -1248,4 +1219,13 @@
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.learn-card, .cert-featu
+  document.querySelectorAll('.learn-card, .cert-feature, .faq-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+
+</script>
+</body>
+</html>
